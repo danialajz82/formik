@@ -1,33 +1,48 @@
 import React from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
+const onSubmit = (values) => {
+  console.log(values);
+};
+// const validate = (values) => {
+//   let errors = {};
+//   if (!values.name) {
+//     errors.name = "لطفا این قسمت را پر کنید";
+//   }
+//   if (!values.email) {
+//     errors.email = "لطفا این قسمت را پر کنید";
+//   } else if (
+//     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
+//   ) {
+//     errors.email = "لطفا قالب ایمیل را رعایت کنید مثال : aaa@example.bbb";
+//   }
+//   if (!values.password) {
+//     errors.password = "لطفا این قسمت را پر کنید";
+//   }
+//   return errors;
+// };
+
+const validationSchema = Yup.object({
+  name: Yup.string().required("لطفا این قسمت را پر کنید "),
+  email: Yup.string()
+    .required("لطفا این قسمت را پر کنید ")
+    .email("لطفا قالب ایمیل را رعایت کنید : example@gmail.com"),
+  password: Yup.string()
+    .required("لطفا این قسمت را پر کنید")
+    .min(8, "حداقل ۸ کاراکتر را وارد کنید"),
+});
 
 const Registerform = () => {
   const formik = useFormik({
-    initialValues: {
-      name: "qasem",
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    },
-    validate: (values) => {
-      let errors = {};
-      if (!values.name) {
-        errors.name = "لطفا این قسمت را پر کنید";
-      }
-      if (!values.email) {
-        errors.email = "لطفا این قسمت را پر کنید";
-      } else if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
-      ) {
-        errors.email = "لطفا قالب ایمیل را رعایت کنید مثال : aaa@example.bbb";
-      }
-      if (!values.password) {
-        errors.password = "لطفا این قسمت را پر کنید";
-      }
-      return errors;
-    },
+    initialValues,
+    onSubmit,
+    // validate,
+    validationSchema,
   });
 
   const attrs = {
@@ -100,7 +115,7 @@ const Registerform = () => {
                 // value={formik.values.password}
                 // onChange={formik.handleChange}
                 // onBlur={formik.handleBlur}
-                {...formik.getFieldProps("password ")}
+                {...formik.getFieldProps("password")}
               />
               {formik.errors.password && formik.touched.password ? (
                 <small className="d-block text-center text-danger">
