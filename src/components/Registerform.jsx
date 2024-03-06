@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik } from "formik";
+import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 const initialValues = {
   name: "",
@@ -38,12 +38,12 @@ const validationSchema = Yup.object({
 });
 
 const Registerform = () => {
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    // validate,
-    validationSchema,
-  });
+  // const formik = useFormik({
+  //   initialValues,
+  //   onSubmit,
+  //   // validate,
+  //   validationSchema,
+  // });
 
   const attrs = {
     type: "text",
@@ -51,87 +51,96 @@ const Registerform = () => {
     id: "name",
     name: "name",
   };
-  console.log(formik);
+  // console.log(formik);
 
   return (
-    <div className="auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0">
-      <div className="row w-100 justify-content-center align-items-center">
-        <div className="auth_box col-11 col-md-8 col-lg-6 col-xl-4 py-4 px-3">
-          <form onSubmit={formik.handleSubmit}>
-            <h1 className="text-center">
-              <i className="fas fa-user-plus text-primary"></i>
-            </h1>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">
-                نام
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                // {...attrs}
-                // value={formik.values.name}
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      <div className="auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0">
+        <div className="row w-100 justify-content-center align-items-center">
+          <div className="auth_box col-11 col-md-8 col-lg-6 col-xl-4 py-4 px-3">
+            <Form>
+              <h1 className="text-center">
+                <i className="fas fa-user-plus text-primary"></i>
+              </h1>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  نام
+                </label>
+                <Field
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  // {...attrs}
+                  // value={formik.values.name}
+                  // onChange={formik.handleChange}
+                  // onBlur={formik.handleBlur}
 
-                {...formik.getFieldProps("name")}
-              />
-              {formik.errors.name && formik.touched.name ? (
-                <small className="d-block text-center text-danger">
-                  {formik.errors.name}
-                </small>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                ایمیل
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                // value={formik.values.email}
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                {...formik.getFieldProps("email")}
-              />
-              {formik.errors.email && formik.touched.email ? (
-                <small className="d-block text-center text-danger">
-                  {formik.errors.email}
-                </small>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                رمز عبور
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                // value={formik.values.password}
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                {...formik.getFieldProps("password")}
-              />
-              {formik.errors.password && formik.touched.password ? (
-                <small className="d-block text-center text-danger">
-                  {formik.errors.password}
-                </small>
-              ) : null}
-            </div>
-            <div className="text-center w-100">
-              <button type="submit" className="btn btn-primary">
-                ثبت نام
-              </button>
-            </div>
-          </form>
+                  // {...formik.getFieldProps("name")}
+                />
+                {/* {formik.errors.name && formik.touched.name ? (
+                  <small className="d-block text-center text-danger">
+                    {formik.errors.name}
+                  </small>
+                ) : null} */}
+                <ErrorMessage name="name" />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  ایمیل
+                </label>
+                <Field
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  // value={formik.values.email}
+                  // onChange={formik.handleChange}
+                  // onBlur={formik.handleBlur}
+                  // {...formik.getFieldProps("email")}
+                />
+                {/* {formik.errors.email && formik.touched.email ? (
+                  <small className="d-block text-center text-danger">
+                    {formik.errors.email}
+                  </small>
+                ) : null} */}
+                <ErrorMessage name="email" />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  رمز عبور
+                </label>
+                <Field
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  name="password"
+                  // value={formik.values.password}
+                  // onChange={formik.handleChange}
+                  // onBlur={formik.handleBlur}
+                  // {...formik.getFieldProps("password")}
+                />
+                {/* {formik.errors.password && formik.touched.password ? (
+                  <small className="d-block text-center text-danger">
+                    {formik.errors.password}
+                  </small>
+                ) : null} */}
+                <ErrorMessage name="password" />
+              </div>
+              <div className="text-center w-100">
+                <button type="submit" className="btn btn-primary">
+                  ثبت نام
+                </button>
+              </div>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </Formik>
   );
 };
 
