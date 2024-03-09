@@ -1,10 +1,20 @@
 import React from "react";
-import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
+import {
+  ErrorMessage,
+  FastField,
+  Field,
+  Form,
+  Formik,
+  useFormik,
+} from "formik";
 import * as Yup from "yup";
+import PersonalField from "./PersonalField";
+import personalError from "./personalError";
 const initialValues = {
   name: "",
   email: "",
   password: "",
+  bio: "",
 };
 const onSubmit = (values) => {
   console.log(values);
@@ -70,11 +80,13 @@ const Registerform = () => {
                 <label htmlFor="name" className="form-label">
                   نام
                 </label>
-                <Field
+                <FastField
                   type="text"
                   className="form-control"
                   id="name"
                   name="name"
+                  placeholder="لطفا نام را وارد کنید"
+
                   // {...attrs}
                   // value={formik.values.name}
                   // onChange={formik.handleChange}
@@ -93,11 +105,12 @@ const Registerform = () => {
                 <label htmlFor="email" className="form-label">
                   ایمیل
                 </label>
-                <Field
+                <FastField
                   type="email"
                   className="form-control"
                   id="email"
                   name="email"
+                  placeholder="لطفا ایمیل را وارد کنید"
                   // value={formik.values.email}
                   // onChange={formik.handleChange}
                   // onBlur={formik.handleBlur}
@@ -108,17 +121,44 @@ const Registerform = () => {
                     {formik.errors.email}
                   </small>
                 ) : null} */}
+                {(error) => (
+                  <small className="d-block text-center text-danger">
+                    {error}{" "}
+                  </small>
+                )}
                 <ErrorMessage name="email" />
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">
                   رمز عبور
                 </label>
-                <Field
-                  type="password"
-                  className="form-control"
-                  id="password"
+                <FastField
                   name="password"
+                  // value={formik.values.password}
+                  // onChange={formik.handleChange}
+                  // onBlur={formik.handleBlur}
+                  // {...formik.getFieldProps("password")}
+                >
+                  {(props) => <PersonalField {...props} />}
+                </FastField>
+                {/* {formik.errors.password && formik.touched.password ? (
+                  <small className="d-block text-center text-danger">
+                    {formik.errors.password}
+                  </small>
+                ) : null} */}
+                <ErrorMessage name="password" component={personalError} />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  بیوگرافی
+                </label>
+                <FastField
+                  type="text"
+                  className="form-control"
+                  id="bio"
+                  name="bio"
+                  placeholder="لطفا بیوگرافی را وارد کنید"
+                  as="textarea"
                   // value={formik.values.password}
                   // onChange={formik.handleChange}
                   // onBlur={formik.handleBlur}
@@ -129,7 +169,7 @@ const Registerform = () => {
                     {formik.errors.password}
                   </small>
                 ) : null} */}
-                <ErrorMessage name="password" />
+                <ErrorMessage name="bio" />
               </div>
               <div className="text-center w-100">
                 <button type="submit" className="btn btn-primary">
